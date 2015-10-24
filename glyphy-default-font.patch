@@ -1,0 +1,19 @@
+--- glyphy-71390c5baccbe2bcba19171d1e31732a49c35fa3/configure.ac.orig	2015-10-01 23:38:09.000000000 +0200
++++ glyphy-71390c5baccbe2bcba19171d1e31732a49c35fa3/configure.ac	2015-10-24 22:21:56.330943661 +0200
+@@ -92,10 +92,15 @@
+ 
+ # Find default font, for the demo
+ AC_MSG_CHECKING([for default font])
+-DEFAULT_FONT="`fc-match -v 2>/dev/null | grep 'file:' | cut -d'\"' -f2`"
++AC_ARG_VAR([DEFAULT_FONT], [Default font])
++if test "x$DEFAULT_FONT" = x; then
++DEFAULT_FONT="$(fc-match -v 2>/dev/null | grep 'file:' | cut -d'"' -f2)"
+ if test "x$DEFAULT_FONT" = x; then :; else
+ 	AC_DEFINE_UNQUOTED([DEFAULT_FONT], ["$DEFAULT_FONT"], [Default font file.])
+ fi
++else
++	AC_DEFINE_UNQUOTED([DEFAULT_FONT], ["$DEFAULT_FONT"], [Default font file.])
++fi
+ AC_MSG_RESULT($DEFAULT_FONT)
+ 
+ dnl ===========================================================================
